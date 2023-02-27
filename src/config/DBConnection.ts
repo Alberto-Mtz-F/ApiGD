@@ -11,5 +11,5 @@ export const Connection = TypeOrmModule.forRoot({
     password: '',
     database: 'GreenDesert_BD',
     entities: [Role,User,Employee],
-    synchronize: true,
+    synchronize: false,
 })
