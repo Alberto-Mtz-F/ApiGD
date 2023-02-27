@@ -24,6 +24,6 @@ export class User{
 
     @OneToOne(() => Employee)
     @JoinColumn({name:'employee'})
-    employee: Employee
+    employee: number
     
 }

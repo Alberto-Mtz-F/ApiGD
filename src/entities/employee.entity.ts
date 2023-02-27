@@ -29,6 +29,6 @@ export class Employee{
     status: string;
 
     @OneToOne(() => User , (user) => user.employee)
-    user: User
+    user: number
 
 }
