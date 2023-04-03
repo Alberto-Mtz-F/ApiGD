@@ -1,3 +1,5 @@
+import { IUser } from "./user.model";
+
 export interface IEmployee{
     name : string;
 
@@ -13,4 +15,5 @@ export interface IEmployee{
 
     status: string;
 
+    user: IUser
 }

@@ -16,6 +16,9 @@ export class User{
     password : string;
 
     @Column()
+    uuid: string; //Variable para aplicar 
+
+    @Column()
     status : string;
 
     @ManyToOne(() => Role, (role) => role.user) //Foreign
