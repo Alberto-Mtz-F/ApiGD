@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Get, Param } from '@nestjs/common';
+import { Body, Controller, Post, Get, Param, Put, Delete } from '@nestjs/common';
 import { IEmployee } from 'src/models/employee.model';
 import { EmployeeService } from './employee.service';
 
@@ -12,15 +12,23 @@ export class EmployeeController {
     }
 
     @Get('/all')
-    getallemployee(){
+    getallEmployee(){
         return this.employeeService.getAll()
     }
 
     @Get(':id')
-    getoneemployee(@Param('id') param){
+    getoneEmployee(@Param('id') param){
         const empleado = this.employeeService.getbyID(param)
         return empleado ?? "El empleado no existe"
     }
 
-    
+    @Put('/update/:id')
+    updateEmployee(@Body() employee: IEmployee, @Param('id') id){
+        return this.employeeService.updateEmployeebyID(Number(id), employee)
+    }
+
+    @Delete('/delete/:id')
+    deleteEmployeebyID(@Param('id') id){
+        return this.employeeService.deleteEmployee(Number(id))
+    }
 }

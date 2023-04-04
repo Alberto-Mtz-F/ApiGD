@@ -42,10 +42,23 @@ export class EmployeeService {
             where:{id:id_employee}
         })
     }
+    
+    async updateEmployeebyID(id: number, employee: IEmployee){
+        const employeeExist = await this.employeeEntity.findOne({where:{id:id}})
+        this.validateUser(employeeExist, id)
+        
+        return await this.employeeEntity.update({id}, employee)
+    }
+
+    async deleteEmployee(id: number){
+        const employeeExist = await this.employeeEntity.findOne({where:{id:id}})
+        this.validateUser(employeeExist, id)
+        return await this.employeeEntity.delete({id})
+    }
 
     validateUser(employeeExist: Employee, id_employee: number){
         if(!employeeExist){
-            console.error(`No se a encontrado al usuario con id ${id_employee}`)
+            console.error(`No se a encontrado al empleado con id ${id_employee}`)
         }
     }
 }
