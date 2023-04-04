@@ -36,7 +36,7 @@ export class EmployeeService {
 
     async getbyID(id_employee: number){
         const employeeExist = await this.employeeEntity.findOne({where:{id:id_employee}})
-        this.validateUser(employeeExist, id_employee)
+        this.validateEmployee(employeeExist, id_employee)
         return await this.employeeEntity.findOne({
             relations:{user:true},
             where:{id:id_employee}
@@ -45,7 +45,7 @@ export class EmployeeService {
     
     async updateEmployeebyID(id: number, employee: IEmployee){
         const employeeExist = await this.employeeEntity.findOne({where:{id:id}})
-        this.validateUser(employeeExist, id)
+        this.validateEmployee(employeeExist, id)
         
         return await this.employeeEntity.update({id}, employee)
     }
@@ -56,7 +56,7 @@ export class EmployeeService {
         return await this.employeeEntity.delete({id})
     }
 
-    validateUser(employeeExist: Employee, id_employee: number){
+    validateEmployee(employeeExist: Employee, id_employee: number){
         if(!employeeExist){
             console.error(`No se a encontrado al empleado con id ${id_employee}`)
         }
