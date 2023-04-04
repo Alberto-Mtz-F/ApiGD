@@ -11,7 +11,7 @@ import { UserService } from '../User/user.service';
 export class EmployeeService { 
     constructor(
         @InjectRepository(Employee) private employeeEntity : Repository<Employee>,
-        private userEntity :UserService
+        private userService :UserService
     ){}
 
     async create(employee: IEmployee){
@@ -25,11 +25,27 @@ export class EmployeeService {
             role: employee.user.role,
             employee: response.id
         }
-        return this.userEntity.create(usuario)
+        return this.userService.create(usuario)
     }
 
-    async createwhitUser(employee: IEmployee){
-       
-        return await this.employeeEntity.insert(employee)
+    getAll(){
+        return this.employeeEntity.find({
+            relations:{user:true},
+        })
+    }
+
+    async getbyID(id_employee: number){
+        const employeeExist = await this.employeeEntity.findOne({where:{id:id_employee}})
+        this.validateUser(employeeExist, id_employee)
+        return await this.employeeEntity.findOne({
+            relations:{user:true},
+            where:{id:id_employee}
+        })
+    }
+
+    validateUser(employeeExist: Employee, id_employee: number){
+        if(!employeeExist){
+            console.error(`No se a encontrado al usuario con id ${id_employee}`)
+        }
     }
 }

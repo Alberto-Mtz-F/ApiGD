@@ -15,6 +15,5 @@ export class UserService {
         return await this.userEntity.insert(user)
     }
 
-    
 
 }
