@@ -51,8 +51,8 @@ export class EmployeeService {
     }
 
     async deleteEmployee(id: number){
-        const employeeExist = await this.employeeEntity.findOne({where:{id:id}})
-        this.validateUser(employeeExist, id)
+        const employeeExist = await this.getbyID(id)
+        if (employeeExist) this.userService.deleteUser(employeeExist.user.id)
         return await this.employeeEntity.delete({id})
     }
 
