@@ -24,7 +24,39 @@ export class ProductService {
         return this.inventoryService.create(inventario)
         
     }
+    
+    getAll(){
+        return this.productEntity.find({
+            relations: ['inventory', 'provider']
+        })
+    }
 
+    async getbyID(id_Product: number){
+        const productExist = await this.productEntity.findOne({where:{id:id_Product}})
+        this.validateProduct(productExist, id_Product)
+        return await this.productEntity.findOne({
+            relations: ['inventory', 'provider'],
+            where:{id:id_Product}
+        })
+    }
     
-    
+    async updateProductbyID(id: number, product: IProduct){
+        const productExist = await this.productEntity.findOne({where:{id:id}})
+        this.validateProduct(productExist, id)
+        
+        return await this.productEntity.update({id}, product)
+    }
+
+    async deleteProduct(id: number){
+        const productExist = await this.getbyID(id)
+        
+        if (productExist) await this.inventoryService.deleteInventory(productExist.inventory.id)
+        return await this.productEntity.delete({id})
+    }
+
+    validateProduct(productExist: Product, id_Product: number){
+        if(!productExist){
+            console.error(`No se a encontrado el producto con id ${id_Product}`)
+        }
+    }
 }
