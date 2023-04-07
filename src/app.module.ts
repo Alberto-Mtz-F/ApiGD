@@ -6,9 +6,12 @@ import { AppService } from './app.service';
 
 import { Connection } from './config/DBConnection';
 import { EmployeeModule } from './api/Employee/employee.module';
+import { InventoryModule } from './api/Inventory/inventory.module';
+import { ProductModule } from './api/Product/product.module';
+import { ProviderModule } from './api/Provider/provider.module';
 
 @Module({
-  imports: [Connection, RoleModule, UserModule, EmployeeModule],
+  imports: [Connection, RoleModule, UserModule, EmployeeModule, InventoryModule, ProductModule, ProviderModule],
   controllers: [AppController],
   providers: [AppService],
 })
