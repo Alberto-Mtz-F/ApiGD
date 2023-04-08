@@ -1,6 +1,9 @@
-import { Body, Controller, Post, Get, Param, Put, Delete } from '@nestjs/common';
+import { Body, Controller, Post, Get, Param, Put, Delete, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { IProduct } from 'src/models/product.model';
 import { ProductService } from './product.service';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { fileFilter, renameImage } from 'src/helper/images.helper';
 
 @Controller('product')
 export class ProductController {
@@ -9,6 +12,18 @@ export class ProductController {
     @Post()
     Create(@Body() params: IProduct){
         this.productService.create(params)
+    }
+
+    @Post('upload')
+    @UseInterceptors(FileInterceptor('file' , {
+        storage: diskStorage({
+            destination: './upload',
+            filename: renameImage
+        }),
+        fileFilter: fileFilter
+    }))
+    async uploadFile(@UploadedFile() file: Express.Multer.File, @Body() params:number){
+        return await this.productService.uploadFile(file.filename , params);
     }
 
     @Get('/all')
