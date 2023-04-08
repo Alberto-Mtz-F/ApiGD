@@ -21,8 +21,16 @@ export class ProductService {
             spot: response.inventory.spot,
             product: response.id
         }
-        return this.inventoryService.create(inventario)
-        
+        return await this.inventoryService.create(inventario)
+    }
+
+    async uploadFile (filename: string, id_Product: number ){
+        const file = {
+            image: filename
+        }
+
+        return await this.productEntity.update(id_Product , file)
+
     }
     
     getAll(){
