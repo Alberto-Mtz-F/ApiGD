@@ -57,8 +57,8 @@ export class ProductService {
 
     async deleteProduct(id: number){
         const productExist = await this.getbyID(id)
-        
-        if (productExist) await this.inventoryService.deleteInventory(productExist.inventory.id)
+        if (!productExist) return false
+        await this.inventoryService.deleteInventory(productExist.inventory.id)
         return await this.productEntity.delete({id})
     }
 

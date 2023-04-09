@@ -38,8 +38,9 @@ export class UserService {
     }
 
     async deleteUser(id: number){
-        const userExist = await this.userEntity.findOne({where:{id:id}})
-        this.validateUser(userExist, id)
+        const userExist = await this.getbyID(id)
+        if(!userExist) return false
+
         return await this.userEntity.delete({id})
     }
 

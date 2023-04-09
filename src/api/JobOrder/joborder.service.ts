@@ -41,8 +41,9 @@ export class JobOrderService {
     }
 
     async deleteJobOrder(id: number){
-        const jobOrderExist = await this.jobOrderEntity.findOne({where:{id:id}})
-        this.validateJobOrder(jobOrderExist, id)
+        const jobOrderExist = await this.getbyID(id)
+        if(!jobOrderExist) return false
+
         return await this.jobOrderEntity.delete({id})
     }
 

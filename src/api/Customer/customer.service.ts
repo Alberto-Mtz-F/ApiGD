@@ -1,3 +1,4 @@
+import { JobOrderService } from './../JobOrder/joborder.service';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Customer } from 'src/entities/customer.entity';
@@ -7,7 +8,9 @@ import { Repository } from 'typeorm';
 @Injectable()
 export class CustomerService { 
     constructor(
-        @InjectRepository(Customer) private customerEntity : Repository<Customer>
+        @InjectRepository(Customer) private customerEntity : Repository<Customer>,
+        private jobOrderService : JobOrderService
+
     ){}
 
     async create (customer: ICustomer){
@@ -37,9 +40,17 @@ export class CustomerService {
     }
 
     async deleteCustomer(id: number){
-        const customerExist = await this.customerEntity.findOne({where:{id:id}})
-        this.validateCustomer(customerExist, id)
+        const customerExist = await this.getbyID(id)
+        if (!customerExist) return false
+        await this.deleteJobOrders(customerExist)
         return await this.customerEntity.delete({id})
+    }
+
+    async deleteJobOrders(customerExist: Customer){
+        let order = customerExist.jobOrder
+        for (let index = 0; index < order.length; index++) {
+            await this.jobOrderService.deleteJobOrder(order[index].id)
+        }
     }
 
     validateCustomer(customerExist: Customer, id_customer: number){

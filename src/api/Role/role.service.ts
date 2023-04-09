@@ -4,11 +4,13 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Role } from 'src/entities/role.entity';
 import { Repository } from 'typeorm';
+import { UserService } from '../User/user.service';
 
 @Injectable()
 export class RoleService {
     constructor(
-        @InjectRepository(Role) private roleEntity : Repository<Role>
+        @InjectRepository(Role) private roleEntity : Repository<Role>,
+        private userService: UserService
     ){}
 
     async create (role: IRole){
@@ -38,16 +40,21 @@ export class RoleService {
     }
 
     async deleteRole(id: number){
-        const userExist = await this.roleEntity.findOne({where:{id:id}})
-        this.validateRole(userExist, id)
-
-
-        console.log(userExist)
-        //return await this.roleEntity.delete({id})
+        const roleExist = await this.getbyID(id)
+        if(!roleExist) return false
+        await this.deleteusers(roleExist)
+        return await this.roleEntity.delete({id})
     }
 
-    validateRole(userExist: Role, id_role: number){
-        if(!userExist){
+    async deleteusers(roleExist: Role){
+        let user = roleExist.user
+        for (let index = 0; index < user.length; index++) {
+            await this.userService.deleteUser(user[index].id)
+        }
+    }
+
+    validateRole(roleExist: Role, id_role: number){
+        if(!roleExist){
             console.error(`No se a encontrado al rol con id ${id_role}`)
         }
     }

@@ -52,7 +52,10 @@ export class EmployeeService {
 
     async deleteEmployee(id: number){
         const employeeExist = await this.getbyID(id)
-        if (employeeExist) this.userService.deleteUser(employeeExist.user.id)
+        if (!employeeExist) return false
+
+        console.log(employeeExist)
+        await this.userService.deleteUser(employeeExist.user.id)
         return await this.employeeEntity.delete({id})
     }
 
