@@ -30,7 +30,7 @@ export class EmployeeService {
 
     getAll(){
         return this.employeeEntity.find({
-            relations:{user:true},
+            relations:['user', 'jobOrder'],
         })
     }
 
@@ -38,7 +38,7 @@ export class EmployeeService {
         const employeeExist = await this.employeeEntity.findOne({where:{id:id_employee}})
         this.validateEmployee(employeeExist, id_employee)
         return await this.employeeEntity.findOne({
-            relations:{user:true},
+            relations:['user', 'jobOrder'],
             where:{id:id_employee}
         })
     }

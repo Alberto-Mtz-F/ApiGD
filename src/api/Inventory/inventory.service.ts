@@ -17,7 +17,7 @@ export class InventoryService {
 
     getAll(){
         return this.inventoryEntity.find({
-            relations:['product']
+            relations:['product', 'jobOrder']
         })
     }
 
@@ -25,7 +25,7 @@ export class InventoryService {
         const inventoryExist = await this.inventoryEntity.findOne({where:{id:id_inventory}})
         this.validateInventory(inventoryExist, id_inventory)
         return await this.inventoryEntity.findOne({
-            relations:['product'],
+            relations:['product', 'jobOrder'],
             where:{id:id_inventory}
         })
     }

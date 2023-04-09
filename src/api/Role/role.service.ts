@@ -17,7 +17,7 @@ export class RoleService {
 
     getAll(){
         return this.roleEntity.find({
-            relations:{user:true},
+            relations:['user'],
         })
     }
 
@@ -25,7 +25,7 @@ export class RoleService {
         const roleExist = await this.roleEntity.findOne({where:{id:id_role}})
         this.validateRole(roleExist, id_role)
         return await this.roleEntity.findOne({
-            relations:{user:true},
+            relations:['user'],
             where:{id:id_role}
         })
     }
@@ -40,7 +40,10 @@ export class RoleService {
     async deleteRole(id: number){
         const userExist = await this.roleEntity.findOne({where:{id:id}})
         this.validateRole(userExist, id)
-        return await this.roleEntity.delete({id})
+
+
+        console.log(userExist)
+        //return await this.roleEntity.delete({id})
     }
 
     validateRole(userExist: Role, id_role: number){
