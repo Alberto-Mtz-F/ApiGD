@@ -1,11 +1,14 @@
+import { IsNumber } from "class-validator";
 import { IInventory } from "./inventory.model";
 
-export interface IJobOrder{
-
+export class IJobOrder{
+    @IsNumber()
     quantity: number;
     
+    @IsNumber()
     customer: number;
 
+    @IsNumber()
     employee: number;
 
     inventory: IInventory[];
