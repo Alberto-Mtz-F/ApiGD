@@ -23,7 +23,7 @@ export class JobOrderController {
     }
 
     @Put('/update/:id')
-    updateJobOrder(@Body() jobOrder: IJobOrder, @Param('id') id){
+    updateJobOrder(@Body() jobOrder, @Param('id') id){
         return this.jobOrderService.updateJobOrderbyID(Number(id), jobOrder)
     }
 

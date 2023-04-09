@@ -24,7 +24,7 @@ export class UserController {
     }
 
     @Put('/update/:id')
-    updateEmployee(@Body() user: IUser, @Param('id') id){
+    updateEmployee(@Body() user, @Param('id') id){
         return this.userService.updateUserbyID(Number(id), user)
     }
 

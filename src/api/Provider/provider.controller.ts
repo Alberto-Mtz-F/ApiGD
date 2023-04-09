@@ -23,7 +23,7 @@ export class ProviderController {
     }
 
     @Put('/update/:id')
-    updateProvider(@Body() provaider: IProvider, @Param('id') id){
+    updateProvider(@Body() provaider, @Param('id') id){
         return this.providerService.updateProviderbyID(Number(id), provaider)
     }
 

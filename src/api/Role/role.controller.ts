@@ -24,7 +24,7 @@ export class RoleController {
     }
 
     @Put('/update/:id')
-    updateRole(@Body() role: IRole, @Param('id') id){
+    updateRole(@Body() role, @Param('id') id){
         return this.roleService.updateRolebyID(Number(id), role)
     }
 

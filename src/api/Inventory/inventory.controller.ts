@@ -23,7 +23,7 @@ export class InventoryController {
     }
 
     @Put('/update/:id')
-    updateInvntory(@Body() inventory: IInventory, @Param('id') id){
+    updateInvntory(@Body() inventory, @Param('id') id){
         return this.inventoryService.updateInventorybyID(Number(id), inventory)
     }
 

@@ -23,7 +23,7 @@ export class CustomerController {
     }
 
     @Put('/update/:id')
-    updateCustomer(@Body() customer: ICustomer, @Param('id') id){
+    updateCustomer(@Body() customer, @Param('id') id){
         return this.customerService.updateCustomerbyID(Number(id), customer)
     }
 
