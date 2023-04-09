@@ -1,5 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne, OneToMany} from 'typeorm';
 import { User } from './user.entity';
+import { JobOrder } from './joborder.entity';
 
 @Entity()
 export class Employee{
@@ -31,4 +32,7 @@ export class Employee{
     @OneToOne(() => User , (user) => user.employee)
     user: User
 
+    @OneToMany(() => JobOrder, (jobOrder) => jobOrder.employee)
+    jobOrder: JobOrder[]
+    
 }

@@ -1,6 +1,8 @@
 import { Employee } from './../entities/employee.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Customer } from 'src/entities/customer.entity';
 import { Inventory } from 'src/entities/inventory.entity';
+import { JobOrder } from 'src/entities/joborder.entity';
 import { Product } from 'src/entities/product.entity';
 import { Provider } from 'src/entities/provider.entity';
 import { Role } from 'src/entities/role.entity';
@@ -13,6 +15,6 @@ export const Connection = TypeOrmModule.forRoot({
     username: 'root',
     password: '',
     database: 'GreenDesert_BD',
-    entities: [Role,User,Employee,Inventory,Product,Provider],
+    entities: [Role,User,Employee,Inventory,Product,Provider, JobOrder, Customer],
     synchronize: false,
 })

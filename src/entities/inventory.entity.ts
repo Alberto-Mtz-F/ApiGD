@@ -1,5 +1,6 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Product } from "./product.entity";
+import { JobOrder } from "./joborder.entity";
 
 @Entity()
 export class Inventory{
@@ -17,5 +18,6 @@ export class Inventory{
     @JoinColumn({name:'product'})
     product: number;
 
-    //order: number;
+    @ManyToMany(() => JobOrder, (jobOrder) => jobOrder.inventory) //Foreign
+    jobOrder: JobOrder[];
 }
