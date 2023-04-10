@@ -1,14 +1,16 @@
+import { JobOrderService } from './../JobOrder/joborder.service';
 import { IInventory } from './../../models/inventory.model';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Inventory } from 'src/entities/inventory.entity';
 import { Repository } from 'typeorm';
-import { ProductService } from '../Product/product.service';
 
 @Injectable()
 export class InventoryService {
     constructor(
         @InjectRepository(Inventory) private inventoryEntity : Repository<Inventory>,
+
+        private jobOrderService: JobOrderService,
     ){}
 
     async create(inventory: IInventory){
@@ -17,7 +19,7 @@ export class InventoryService {
 
     getAll(){
         return this.inventoryEntity.find({
-            relations:['product']
+            relations:['product', 'jobOrder']
         })
     }
 
@@ -25,7 +27,7 @@ export class InventoryService {
         const inventoryExist = await this.inventoryEntity.findOne({where:{id:id_inventory}})
         this.validateInventory(inventoryExist, id_inventory)
         return await this.inventoryEntity.findOne({
-            relations:['product'],
+            relations:['product', 'jobOrder'],
             where:{id:id_inventory}
         })
     }
@@ -38,9 +40,17 @@ export class InventoryService {
     }
 
     async deleteInventory(id: number){
-        const inventoryExist = await this.inventoryEntity.findOne({where:{id:id}})
-        this.validateInventory(inventoryExist, id)
+        const inventoryExist = await this.getbyID(id)
+        if (!inventoryExist) return false
+        await this.deletejobOrder(inventoryExist)
         return await this.inventoryEntity.delete({id})
+    }
+
+    async deletejobOrder(inventoryExist: Inventory){
+        let order = inventoryExist.jobOrder
+        for (let index = 0; index < order.length; index++) {
+            await this.jobOrderService.deleteJobOrder(order[index].id)
+        }
     }
 
     validateInventory(inventoryExist: Inventory, id_inventory: number){

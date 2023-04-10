@@ -30,7 +30,7 @@ export class EmployeeService {
 
     getAll(){
         return this.employeeEntity.find({
-            relations:{user:true},
+            relations:['user', 'jobOrder'],
         })
     }
 
@@ -38,7 +38,7 @@ export class EmployeeService {
         const employeeExist = await this.employeeEntity.findOne({where:{id:id_employee}})
         this.validateEmployee(employeeExist, id_employee)
         return await this.employeeEntity.findOne({
-            relations:{user:true},
+            relations:['user', 'jobOrder'],
             where:{id:id_employee}
         })
     }
@@ -52,7 +52,10 @@ export class EmployeeService {
 
     async deleteEmployee(id: number){
         const employeeExist = await this.getbyID(id)
-        if (employeeExist) this.userService.deleteUser(employeeExist.user.id)
+        if (!employeeExist) return false
+
+        console.log(employeeExist)
+        await this.userService.deleteUser(employeeExist.user.id)
         return await this.employeeEntity.delete({id})
     }
 

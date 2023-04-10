@@ -46,14 +46,17 @@ export class ProviderService {
 
     async deleteProvider(id: number){
         const providerExist = await this.getbyID(id)
-        if (providerExist){
-            for (let index = 0; index < providerExist.product.length; index++) {
-                await this.productService.deleteProduct(providerExist.product[index].id)
-            }
-        } 
+        if(!providerExist) return false
 
-
+        await this.deleteproducts(providerExist)
         return await this.providerEntity.delete({id})
+    }
+
+    async deleteproducts(providerExist: Provider){
+        let product = providerExist.product
+        for (let index = 0; index < providerExist.product.length; index++) {
+            await this.productService.deleteProduct(product[index].id)
+        }
     }
 
     validateProvider(providerExist: Provider, id_Provider: number){

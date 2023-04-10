@@ -23,7 +23,7 @@ export class EmployeeController {
     }
 
     @Put('/update/:id')
-    updateEmployee(@Body() employee: IEmployee, @Param('id') id){
+    updateEmployee(@Body() employee, @Param('id') id){
         return this.employeeService.updateEmployeebyID(Number(id), employee)
     }
 

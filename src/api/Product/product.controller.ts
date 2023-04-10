@@ -38,7 +38,7 @@ export class ProductController {
     }
 
     @Put('/update/:id')
-    updateProduct(@Body() product: IProduct, @Param('id') id){
+    updateProduct(@Body() product, @Param('id') id){
         return this.productService.updateProductbyID(Number(id), product)
     }
 

@@ -17,13 +17,14 @@ export class UserService {
     }
 
     getAll(){
-        return this.userEntity.find()
+        return this.userEntity.find({relations: ['role', 'employee']})
     }
 
     async getbyID(id_user: number){
         const userExist = await this.userEntity.findOne({where:{id:id_user}})
         this.validateUser(userExist, id_user)
         return await this.userEntity.findOne({
+            relations: ['role', 'employee'],
             where: {id: id_user}
             
         })
@@ -37,8 +38,9 @@ export class UserService {
     }
 
     async deleteUser(id: number){
-        const userExist = await this.userEntity.findOne({where:{id:id}})
-        this.validateUser(userExist, id)
+        const userExist = await this.getbyID(id)
+        if(!userExist) return false
+
         return await this.userEntity.delete({id})
     }
 
