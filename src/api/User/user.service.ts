@@ -4,15 +4,26 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entities/user.entity';
 import { IUser } from 'src/models/user.model';
 import { Repository } from 'typeorm';
-import { EmployeeService } from '../Employee/employee.service';
+import { Role } from 'src/entities/role.entity';
+import { Employee } from 'src/entities/employee.entity';
 
 @Injectable()
 export class UserService { 
     constructor(
         @InjectRepository(User) private userEntity : Repository<User>,
+        @InjectRepository(Role) private roleEntity : Repository<Role>,
+        @InjectRepository(Employee) private employeeEntity : Repository<Employee>,
+
+        
     ){}
 
     async create(user: IUser){
+        const rolexist = await this.roleEntity.findOne({where:{id: user.role}})
+        if (!rolexist) return console.error(`No existe rol con id ${user.role}`)
+        
+        const employeeexist = await this.employeeEntity.findOne({relations: ['user'], where:{id: user.employee}})
+        if (!employeeexist) return console.error(`No existe el empleado con id ${user.employee}`)
+        if (employeeexist.user) return console.error(`Ya existe un usuario para el empleado con id ${user.employee}`)
         return await this.userEntity.insert(user)
     }
 
