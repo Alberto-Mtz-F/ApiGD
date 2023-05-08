@@ -19,7 +19,7 @@ export class User{
     uuid: string; //Variable para aplicar 
 
     @Column()
-    status : string;
+    status : boolean;
 
     @ManyToOne(() => Role, (role) => role.user) //Foreign
     @JoinColumn({name:'role'})

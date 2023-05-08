@@ -23,7 +23,7 @@ export class Provider{
     phonenumber: string;
     
     @Column()
-    status: string;
+    status: boolean;
 
     @OneToMany(() => Product, (product) => product.provider )
     product: Product[];

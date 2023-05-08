@@ -27,7 +27,7 @@ export class Employee{
     phonenumber: string;
 
     @Column()
-    status: string;
+    status: boolean;
 
     @OneToOne(() => User , (user) => user.employee)
     user: User

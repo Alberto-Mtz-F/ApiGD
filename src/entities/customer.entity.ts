@@ -23,7 +23,7 @@ export class Customer{
     phonenumber: string;
 
     @Column()
-    status: string;
+    status: boolean;
     
     @OneToMany(() => JobOrder , (jobOrder) => jobOrder.customer)
     jobOrder: JobOrder[]

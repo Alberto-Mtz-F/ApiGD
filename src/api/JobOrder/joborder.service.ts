@@ -59,6 +59,7 @@ export class JobOrderService {
             quantity: jobOrder.quantity,
             customer: jobOrder.customer,
             employee: jobOrder.employee,
+            status: jobOrder.status,
             inventory: []
         }
         return order
