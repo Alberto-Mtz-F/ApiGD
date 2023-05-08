@@ -13,23 +13,29 @@ export class UserController {
     }
 
     @Get('/all')
-    getallEmployee(){
+    getallUser(){
         return this.userService.getAll()
     }
 
     @Get(':id')
-    getoneEmployee(@Param('id') param){
-        const empleado = this.userService.getbyID(param)
-        return empleado ?? "El usuario no existe"
+    getoneUser(@Param('id') param){
+        const user = this.userService.getbyID(param)
+        return user ?? "El usuario no existe"
+    }
+
+    @Get('/one/:uuid')
+    getoneUserforUUID(@Param('uuid') param){
+        const user = this.userService.getbyUUID(param)
+        return user ?? "El usuario no existe"
     }
 
     @Put('/update/:id')
-    updateEmployee(@Body() user, @Param('id') id){
+    updateUser(@Body() user, @Param('id') id){
         return this.userService.updateUserbyID(Number(id), user)
     }
 
     @Delete('/delete/:id')
-    deleteEmployeebyID(@Param('id') id){
+    deleteUserbyID(@Param('id') id){
         return this.userService.deleteUser(Number(id))
     }
 }
