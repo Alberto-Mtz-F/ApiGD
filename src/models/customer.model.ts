@@ -1,4 +1,4 @@
-import { IsEmail, IsNumberString, IsString } from "class-validator";
+import { IsBoolean, IsEmail, IsNumberString, IsString } from "class-validator";
 
 export class ICustomer{
 
@@ -17,7 +17,7 @@ export class ICustomer{
     @IsNumberString()
     phonenumber: string;
 
-    @IsString()
-    status: string;
+    @IsBoolean()
+    status: boolean;
     
 }

@@ -15,6 +15,9 @@ export class JobOrder{
     @Column()
     quantity: number;
 
+    @Column()
+    status: boolean;
+
     @ManyToMany(() => Inventory, (inventory) => inventory.jobOrder )
     @JoinTable({
         name: 'jobOrder_inventory',

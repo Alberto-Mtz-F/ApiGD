@@ -1,4 +1,4 @@
-import { IsString, IsDateString, IsEmail, IsNumberString, IsStrongPassword, IsNumber, IsArray } from "class-validator";
+import { IsString, IsDateString, IsEmail, IsNumberString, IsStrongPassword, IsNumber, IsArray, IsBoolean } from "class-validator";
 import { IUser } from "./user.model";
 
 export class IEmployee{
@@ -20,8 +20,8 @@ export class IEmployee{
     @IsNumberString()
     phonenumber: string;
 
-    @IsString()
-    status: string;
+    @IsBoolean()
+    status: boolean;
     
     user:IUser // No se puede validar (Desde el Thunder Client al menos no logro apreciar como validar)
         

@@ -1,4 +1,4 @@
-import { IsNumber } from "class-validator";
+import { IsBoolean, IsNumber } from "class-validator";
 import { IInventory } from "./inventory.model";
 
 export class IJobOrder{
@@ -10,6 +10,9 @@ export class IJobOrder{
 
     @IsNumber()
     employee: number;
+
+    @IsBoolean()
+    status: boolean;
 
     inventory: IInventory[];
 }

@@ -1,4 +1,4 @@
-import { IsEmail, IsNumber, IsString, IsStrongPassword, IsUUID } from 'class-validator';
+import { IsBoolean, IsEmail, IsNumber, IsString, IsStrongPassword, IsUUID } from 'class-validator';
 import { IEmployee } from './employee.model';
 export class IUser{
     @IsString()
@@ -10,8 +10,8 @@ export class IUser{
     @IsStrongPassword()
     password: string;
 
-    @IsString()
-    status: string;
+    @IsBoolean()
+    status: boolean;
 
     @IsNumber()
     role: number;
