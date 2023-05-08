@@ -1,7 +1,7 @@
 import { IsEmail, IsNumber, IsString, IsStrongPassword, IsUUID } from 'class-validator';
 import { IEmployee } from './employee.model';
 export class IUser{
-    @IsUUID()
+    @IsString()
     uuid: string;
 
     @IsEmail()

@@ -15,10 +15,10 @@ export class EmployeeService {
     ){}
 
     async create(employee: IEmployee){
-        let demomento : string
+        
         const response =  await this.employeeEntity.save(employee)
         const usuario: IUser = {
-            uuid: demomento,
+            uuid: employee.user.uuid,
             email: response.email,
             password: employee.user.password,
             status: response.status,        
