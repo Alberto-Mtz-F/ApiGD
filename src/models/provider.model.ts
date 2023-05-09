@@ -1,4 +1,4 @@
-import { IsBoolean, IsString } from "class-validator";
+import { IsBoolean, IsEmail, IsString } from "class-validator";
 import { IProduct } from "./product.model";
 
 export class IProvider{
@@ -11,7 +11,7 @@ export class IProvider{
     @IsString()
     address: string;
     
-    @IsString()
+    @IsEmail()
     email: string;
 
     @IsString()
