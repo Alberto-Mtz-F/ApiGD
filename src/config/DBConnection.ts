@@ -10,11 +10,11 @@ import { User } from 'src/entities/user.entity';
 
 export const Connection = TypeOrmModule.forRoot({
     type: 'mysql',
-    host: 'bc3lyr0tvhveqgrdta64-mysql.services.clever-cloud.com',
+    host: 'bowennpp14ifnamaop6r-mysql.services.clever-cloud.com',
     port: 3306 ,
-    username: 'ulehzqomvrttowcd',
-    password: 'UFW9bsdOYpahWqmiCXHF',
-    database: 'bc3lyr0tvhveqgrdta64',
+    username: 'utqwvzrfg6w1mzxl',
+    password: 'qr1rZL5TXmRz98aP2JRA',
+    database: 'bowennpp14ifnamaop6r',
     ssl: {rejectUnauthorized: false},
     entities: [Role,User,Employee,Inventory,Product,Provider, JobOrder, Customer],
     synchronize: false,
